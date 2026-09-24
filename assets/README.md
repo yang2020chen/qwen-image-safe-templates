@@ -18,7 +18,7 @@
 | **04B** | 双图高定物料迁移 | [`04b_test_couture_dress_transfer.png`](./04b_test_couture_dress_transfer.png) | 928 × 1216 | 18.2 GB · 55.1s | 欧根纱半透明光泽、高定洋装面料纹理精准复刻 |
 | **05** | 三视图动态姿势重绘 | [`05_test_dynamic_pose_recreation.png`](./05_test_dynamic_pose_recreation.png) | 1824 × 1216 | 18.9 GB · 62.3s | 汉服三视图驱动暮色水榭漫步回眸，身份一致 |
 | **06** | 商业香水人货焦散 | [`06_test_commercial_perfume_ad.png`](./06_test_commercial_perfume_ad.png) | 928 × 1216 | 18.1 GB · 51.4s | 水晶瓶切面琥珀色液体焦散折射至右手皮肤 |
-| **07** | 满月荷塘环境重塑 | [`07_test_moonlit_lotus_relighting.png`](./07_test_moonlit_lotus_relighting.png) | 928 × 1216 | 18.4 GB · 56.7s | 暮色转满月夜景，冷白皮月光与宫灯双轮廓光 |
+| **07** | 满月荷塘夜景重绘 | [`07_test_moonlit_lotus_relighting.png`](./07_test_moonlit_lotus_relighting.png) | 928 × 1216 | 18.4 GB · 39.2s | 暮色满月夜景，冷白皮月光与宫灯双轮廓光 |
 | **08** | 吹制水晶鹤 RGBA | [`08_test_rgba_transparent_crane.png`](./08_test_rgba_transparent_crane.png) | 1536 × 1536 | 20.1 GB · 98.2s | 原生 4 通道 Alpha 资产，免抠绿幕纯透明底 |
 | **09** | 10位肖像并发群像 | [`09_test_group_10ref_santorini.png`](./09_test_group_10ref_santorini.png) | 1216 × 928 | 21.1 GB · 69.8s | 吞吐 ~2万 Tokens，圣托里尼 10 人合影无畸变 |
 | **10** | 金色云海超现实仙女 | [`10_test_surreal_fairy_wings.png`](./10_test_surreal_fairy_wings.png) | 1536 × 1536 | 20.3 GB · 97.6s | 背生巨大透明琉璃蝶翼，解剖级骨骼结构 |

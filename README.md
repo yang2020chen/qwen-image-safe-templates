@@ -2,7 +2,8 @@
 
 > **针对 ComfyUI 官方 Issue #16435 的工业级避坑指南与高信噪比生产模板**  
 > 适配硬件：AMD Radeon RX 7900 XTX 24GB (ROCm 7.2) / NVIDIA RTX 4090 / RTX 3060 等  
-> 服务端：ComfyUI (默认 `http://127.0.0.1:8188`，支持通过环境变量 `COMFY_URL` 自定义)
+> 服务端：ComfyUI (默认 `http://127.0.0.1:8188`，支持通过环境变量 `COMFY_URL` 自定义)  
+> 📜 **全量开源提示词清单**：10 大战役全景 Prompt、物料提示词与参数详解直达 👉 [PROMPTS.md](./PROMPTS.md)
 
 ---
 
