@@ -1,0 +1,93 @@
+{
+  "469": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "471": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_w4a8.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    }
+  },
+  "472": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    }
+  },
+  "473": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 1824,
+      "height": 1216,
+      "batch_size": 1
+    }
+  },
+  "470": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "clip": [
+        "471",
+        0
+      ],
+      "prompt": "High-end fashion editorial magazine spread, wide landscape 16:9 ratio. Elegant and clean typography design. On the top center, the bold elegant serif English letters 'VOGUE ORIENT' are impeccably printed. Below it, in refined traditional Chinese Songti font: '东方留白 美学新生'. In the center of the frame stands a slender model in an avant-garde monochrome silk ensemble amidst misty bamboo waters. Ultra-clean typography, zero typos, perfectly straight letter edges, luxury print design layout.",
+      "negative_prompt": "",
+      "resolution": 1824
+    }
+  },
+  "475": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "469",
+        0
+      ],
+      "positive": [
+        "470",
+        0
+      ],
+      "negative": [
+        "470",
+        1
+      ],
+      "latent_image": [
+        "473",
+        0
+      ],
+      "seed": 202609,
+      "steps": 32,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+    }
+  },
+  "474": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "475",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ]
+    }
+  },
+  "494": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "474",
+        0
+      ],
+      "filename_prefix": "safe_t2i_landscape_2k"
+    }
+  }
+}

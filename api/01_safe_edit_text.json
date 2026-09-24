@@ -1,0 +1,107 @@
+{
+  "469": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "471": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_w4a8.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    }
+  },
+  "472": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    }
+  },
+  "473": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 928,
+      "height": 1216,
+      "batch_size": 1
+    }
+  },
+  "470": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "clip": [
+        "471",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ],
+      "prompt": "Use <image1> as the canvas for the person, pose, composition, and background, and edit only the clothing area enclosed by the red outline. Replace the casual sweater with a tailored charcoal-grey Italian wool blazer, fitted white silk shirt underneath, delicate fabric texture, and realistic textile folds. Remove the red outline from the final result. Preserve the subject's face, skin, hair, and clean modern studio background from <image1> exactly unchanged.",
+      "negative_prompt": "",
+      "resolution": 1056,
+      "images.image_1": [
+        "4801",
+        0
+      ]
+    }
+  },
+  "475": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "469",
+        0
+      ],
+      "positive": [
+        "470",
+        0
+      ],
+      "negative": [
+        "470",
+        1
+      ],
+      "latent_image": [
+        "473",
+        0
+      ],
+      "seed": 202609,
+      "steps": 32,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+    }
+  },
+  "474": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "475",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ]
+    }
+  },
+  "494": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "474",
+        0
+      ],
+      "filename_prefix": "safe_edit_text"
+    }
+  },
+  "4801": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "v2_base_beauty_hollow_red.png"
+    }
+  }
+}

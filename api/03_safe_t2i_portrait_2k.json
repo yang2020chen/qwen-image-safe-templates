@@ -1,0 +1,93 @@
+{
+  "469": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "471": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_w4a8.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    }
+  },
+  "472": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    }
+  },
+  "473": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 1376,
+      "height": 1824,
+      "batch_size": 1
+    }
+  },
+  "470": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "clip": [
+        "471",
+        0
+      ],
+      "prompt": "Extreme cinematic close-up portrait of a breathtakingly gorgeous East Asian woman in her mid-20s, looking directly at the camera with gentle and serene eyes. Natural skin texture with visible fine pores, soft sub-surface scattering (SSS), delicate peach fuzz along the cheekbones, no excessive makeup, translucent pale skin. Subtle warm rim lighting defining her silhouette against a minimalist concrete and timber architectural background. 85mm portrait lens, f/1.8 aperture, soft cinematic bokeh, 8k resolution, photorealistic masterpiece, Hasselblad H6D-100c quality.",
+      "negative_prompt": "",
+      "resolution": 1824
+    }
+  },
+  "475": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "469",
+        0
+      ],
+      "positive": [
+        "470",
+        0
+      ],
+      "negative": [
+        "470",
+        1
+      ],
+      "latent_image": [
+        "473",
+        0
+      ],
+      "seed": 202609,
+      "steps": 32,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+    }
+  },
+  "474": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "475",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ]
+    }
+  },
+  "494": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "474",
+        0
+      ],
+      "filename_prefix": "safe_t2i_portrait_2k"
+    }
+  }
+}

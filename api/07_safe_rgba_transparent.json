@@ -1,0 +1,93 @@
+{
+  "469": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "471": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_w4a8.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    }
+  },
+  "472": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    }
+  },
+  "473": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 1536,
+      "height": 1536,
+      "batch_size": 1
+    }
+  },
+  "470": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "clip": [
+        "471",
+        0
+      ],
+      "prompt": "RGBA, isolated on transparent background, alpha channel. A masterfully handcrafted blown glass crane with translucent wings, delicate feather grooves, and internal swirling gold foil dust. Wisps of semi-transparent cyan smoke curl gracefully upwards from its base. Completely transparent alpha background, clean edges, zero solid background color, photorealistic glass dispersion, 8k resolution 3D game asset render.",
+      "negative_prompt": "",
+      "resolution": 1536
+    }
+  },
+  "475": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "469",
+        0
+      ],
+      "positive": [
+        "470",
+        0
+      ],
+      "negative": [
+        "470",
+        1
+      ],
+      "latent_image": [
+        "473",
+        0
+      ],
+      "seed": 202609,
+      "steps": 35,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+    }
+  },
+  "474": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "475",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ]
+    }
+  },
+  "494": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "474",
+        0
+      ],
+      "filename_prefix": "safe_rgba_crane"
+    }
+  }
+}

@@ -1,0 +1,448 @@
+{
+  "id": "1b6acfb2-5f65-4126-92bd-2cfe921a17b4",
+  "revision": 0,
+  "last_node_id": 4900,
+  "last_link_id": 9,
+  "nodes": [
+    {
+      "id": 469,
+      "type": "UNETLoader",
+      "pos": [
+        100,
+        100
+      ],
+      "size": [
+        300,
+        82
+      ],
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "MODEL",
+          "type": "MODEL",
+          "links": [
+            1
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "UNETLoader"
+      },
+      "widgets_values": [
+        "qwen_image_2.1_int8_convrot.safetensors",
+        "default"
+      ]
+    },
+    {
+      "id": 471,
+      "type": "CLIPLoader",
+      "pos": [
+        100,
+        240
+      ],
+      "size": [
+        300,
+        106
+      ],
+      "flags": {},
+      "order": 1,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "CLIP",
+          "type": "CLIP",
+          "links": [
+            2
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "CLIPLoader"
+      },
+      "widgets_values": [
+        "qwen3vl_8b_w4a8.safetensors",
+        "qwen_image",
+        "default"
+      ]
+    },
+    {
+      "id": 472,
+      "type": "VAELoader",
+      "pos": [
+        100,
+        400
+      ],
+      "size": [
+        300,
+        58
+      ],
+      "flags": {},
+      "order": 2,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "VAE",
+          "type": "VAE",
+          "links": [
+            3
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAELoader"
+      },
+      "widgets_values": [
+        "qwen_image_2.1_vae_bf16.safetensors"
+      ]
+    },
+    {
+      "id": 473,
+      "type": "EmptyLatentImage",
+      "pos": [
+        100,
+        520
+      ],
+      "size": [
+        300,
+        106
+      ],
+      "flags": {},
+      "order": 3,
+      "mode": 0,
+      "inputs": [],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            4
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "EmptyLatentImage"
+      },
+      "widgets_values": [
+        1536,
+        1536,
+        1
+      ]
+    },
+    {
+      "id": 470,
+      "type": "TextEncodeQwenImage21",
+      "pos": [
+        480,
+        100
+      ],
+      "size": [
+        450,
+        480
+      ],
+      "flags": {},
+      "order": 10,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "clip",
+          "type": "CLIP",
+          "link": 2
+        }
+      ],
+      "outputs": [
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "links": [
+            5
+          ]
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "links": [
+            6
+          ]
+        },
+        {
+          "name": "latent",
+          "type": "LATENT",
+          "links": null
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "TextEncodeQwenImage21"
+      },
+      "widgets_values": [
+        "RGBA, isolated on transparent background, alpha channel. A masterfully handcrafted blown glass crane with translucent wings, delicate feather grooves, and internal swirling gold foil dust. Wisps of semi-transparent cyan smoke curl gracefully upwards from its base. Completely transparent alpha background, clean edges, zero solid background color, photorealistic glass dispersion, 8k resolution 3D game asset render.",
+        "",
+        1536
+      ]
+    },
+    {
+      "id": 475,
+      "type": "KSampler",
+      "pos": [
+        1000,
+        100
+      ],
+      "size": [
+        280,
+        260
+      ],
+      "flags": {},
+      "order": 11,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "model",
+          "type": "MODEL",
+          "link": 1
+        },
+        {
+          "name": "positive",
+          "type": "CONDITIONING",
+          "link": 5
+        },
+        {
+          "name": "negative",
+          "type": "CONDITIONING",
+          "link": 6
+        },
+        {
+          "name": "latent_image",
+          "type": "LATENT",
+          "link": 4
+        }
+      ],
+      "outputs": [
+        {
+          "name": "LATENT",
+          "type": "LATENT",
+          "links": [
+            7
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "KSampler"
+      },
+      "widgets_values": [
+        202609,
+        "randomize",
+        35,
+        1.0,
+        "euler",
+        "simple",
+        1.0
+      ]
+    },
+    {
+      "id": 474,
+      "type": "VAEDecode",
+      "pos": [
+        1340,
+        100
+      ],
+      "size": [
+        160,
+        46
+      ],
+      "flags": {},
+      "order": 12,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "samples",
+          "type": "LATENT",
+          "link": 7
+        },
+        {
+          "name": "vae",
+          "type": "VAE",
+          "link": 3
+        }
+      ],
+      "outputs": [
+        {
+          "name": "IMAGE",
+          "type": "IMAGE",
+          "links": [
+            8
+          ]
+        }
+      ],
+      "properties": {
+        "Node name for S&R": "VAEDecode"
+      },
+      "widgets_values": []
+    },
+    {
+      "id": 494,
+      "type": "SaveImage",
+      "pos": [
+        1560,
+        100
+      ],
+      "size": [
+        280,
+        58
+      ],
+      "flags": {},
+      "order": 13,
+      "mode": 0,
+      "inputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "link": 8
+        }
+      ],
+      "outputs": [
+        {
+          "name": "images",
+          "type": "IMAGE",
+          "links": null
+        }
+      ],
+      "properties": {},
+      "widgets_values": [
+        "safe_rgba_crane"
+      ]
+    }
+  ],
+  "links": [
+    [
+      1,
+      469,
+      0,
+      475,
+      0,
+      "MODEL"
+    ],
+    [
+      2,
+      471,
+      0,
+      470,
+      0,
+      "CLIP"
+    ],
+    [
+      3,
+      472,
+      0,
+      474,
+      1,
+      "VAE"
+    ],
+    [
+      4,
+      473,
+      0,
+      475,
+      3,
+      "LATENT"
+    ],
+    [
+      5,
+      470,
+      0,
+      475,
+      1,
+      "CONDITIONING"
+    ],
+    [
+      6,
+      470,
+      1,
+      475,
+      2,
+      "CONDITIONING"
+    ],
+    [
+      7,
+      475,
+      0,
+      474,
+      0,
+      "LATENT"
+    ],
+    [
+      8,
+      474,
+      0,
+      494,
+      0,
+      "IMAGE"
+    ]
+  ],
+  "groups": [
+    {
+      "id": 1,
+      "title": "1. 核心模型加载 (UNet / CLIP / VAE)",
+      "bounding": [
+        70,
+        40,
+        360,
+        440
+      ],
+      "color": "#3f51b5",
+      "font_size": 24
+    },
+    {
+      "id": 2,
+      "title": "2. 安全网格定义 (Issue #16435 防崩锁死: 1536x1536)",
+      "bounding": [
+        70,
+        490,
+        360,
+        160
+      ],
+      "color": "#e91e63",
+      "font_size": 24
+    },
+    {
+      "id": 3,
+      "title": "3. Qwen 提示词与条件编码 (Safe Res: 1536)",
+      "bounding": [
+        450,
+        40,
+        510,
+        560
+      ],
+      "color": "#4caf50",
+      "font_size": 24
+    },
+    {
+      "id": 4,
+      "title": "4. 采样与图像解码输出 (RX 7900 XTX / CUDA)",
+      "bounding": [
+        970,
+        40,
+        900,
+        350
+      ],
+      "color": "#ff9800",
+      "font_size": 24
+    }
+  ],
+  "config": {},
+  "extra": {
+    "title": "07_QwenImage_Safe_RGBA_Transparent_Asset",
+    "ds": {
+      "scale": 0.75,
+      "offset": [
+        150,
+        120
+      ]
+    },
+    "frontendVersion": "1.47.12"
+  },
+  "version": 0.4
+}

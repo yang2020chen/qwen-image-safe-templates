@@ -1,0 +1,197 @@
+{
+  "469": {
+    "class_type": "UNETLoader",
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    }
+  },
+  "471": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "qwen3vl_8b_w4a8.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    }
+  },
+  "472": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    }
+  },
+  "473": {
+    "class_type": "EmptyLatentImage",
+    "inputs": {
+      "width": 1216,
+      "height": 928,
+      "batch_size": 1
+    }
+  },
+  "470": {
+    "class_type": "TextEncodeQwenImage21",
+    "inputs": {
+      "clip": [
+        "471",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ],
+      "prompt": "A panoramic cinematic group portrait of 10 distinct women standing together on a sunlit Santorini terrace overlooking the Aegean Sea. Each woman's facial identity, ethnicity, skin tone, eye shape, and hairstyle corresponds faithfully and uniquely to <image1> through <image10> respectively. Perfect natural smiles, individual postures, golden hour Mediterranean sun casting soft shadows, crisp sharp focus across all faces, zero face blending or mutation.",
+      "negative_prompt": "",
+      "resolution": 1056,
+      "images.image_1": [
+        "4801",
+        0
+      ],
+      "images.image_2": [
+        "4802",
+        0
+      ],
+      "images.image_3": [
+        "4803",
+        0
+      ],
+      "images.image_4": [
+        "4804",
+        0
+      ],
+      "images.image_5": [
+        "4805",
+        0
+      ],
+      "images.image_6": [
+        "4806",
+        0
+      ],
+      "images.image_7": [
+        "4807",
+        0
+      ],
+      "images.image_8": [
+        "4808",
+        0
+      ],
+      "images.image_9": [
+        "4809",
+        0
+      ],
+      "images.image_10": [
+        "4810",
+        0
+      ]
+    }
+  },
+  "475": {
+    "class_type": "KSampler",
+    "inputs": {
+      "model": [
+        "469",
+        0
+      ],
+      "positive": [
+        "470",
+        0
+      ],
+      "negative": [
+        "470",
+        1
+      ],
+      "latent_image": [
+        "473",
+        0
+      ],
+      "seed": 202609,
+      "steps": 35,
+      "cfg": 1.0,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1.0
+    }
+  },
+  "474": {
+    "class_type": "VAEDecode",
+    "inputs": {
+      "samples": [
+        "475",
+        0
+      ],
+      "vae": [
+        "472",
+        0
+      ]
+    }
+  },
+  "494": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": [
+        "474",
+        0
+      ],
+      "filename_prefix": "safe_multiref_group"
+    }
+  },
+  "4801": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_1.png"
+    }
+  },
+  "4802": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_2.png"
+    }
+  },
+  "4803": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_3.png"
+    }
+  },
+  "4804": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_4.png"
+    }
+  },
+  "4805": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_5.png"
+    }
+  },
+  "4806": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_6.png"
+    }
+  },
+  "4807": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_7.png"
+    }
+  },
+  "4808": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_8.png"
+    }
+  },
+  "4809": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_9.png"
+    }
+  },
+  "4810": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "m5_avatar_10.png"
+    }
+  }
+}
