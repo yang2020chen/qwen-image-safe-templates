@@ -120,14 +120,15 @@ Use <image1> as the reference for the East Asian woman's facial identity, skin t
 
 ---
 
-### 战役 07: 满月荷塘夜景重绘 (冷暖双轮廓光)
-- **模式**：T2I / Relighting
-- **推荐尺寸**：`928 × 1216` (3:4 安全网格)
-- **采样参数**：Steps 32, CFG 1.0
+### 战役 07: 单图环境重塑与全局重打光 (M1 底图换水榭荷塘夜景)
+- **模式**：Edit (单图参考背景重绘与 Relighting)
+- **输入图**：`<image1>` 原始母体素材 M1 骨相美人 (`assets/input_references/m1_base_beauty_2k.png`)
+- **推荐尺寸**：`928 × 1216` (3:4 安全网格，resolution=1056)
+- **采样参数**：Steps 32, CFG 1.0, Denoise 1.0
 - **成果大图**：[`07_test_moonlit_lotus_relighting.png`](assets/07_test_moonlit_lotus_relighting.png)
 - **Prompt (英文)**：
 ```text
-Extreme cinematic masterpiece photograph of a stunning East Asian fairy maiden in an exquisite white and indigo silk hanfu dress standing gracefully in a moonlit lotus pond pavilion at deep twilight. The luminous full moon hangs in the indigo night sky. Her face and hair are illuminated by cool silver lunar rim lighting, while glowing warm lanterns under the wooden eaves cast delicate amber reflections on the rippling water. Soft ethereal atmosphere, natural porcelain skin with subsurface scattering, intricate silk embroidery, zero noise, 8k resolution, photorealistic.
+Use <image1> as the canvas for the person's identity, facial features, porcelain skin tone, hairstyle, and ivory silk dress. Completely replace the minimalist daytime architectural background with an atmospheric classical Chinese water town courtyard at night: a serene dark lotus pond under a deep indigo night sky with a luminous glowing full moon, carved wooden pavilion railings, blooming pink lotus flowers, and warm red silk lanterns casting a gentle glow. Relight the subject naturally according to the new moonlit environment, casting delicate cool silver rim lighting along her hair, shoulders, and silk dress folds, with soft warm amber bounce light from the lanterns reflecting across her skin. Preserve the subject's face, body proportions, and elegant pose from <image1> exactly unchanged, seamless natural composition, masterpiece.
 ```
 
 ---
