@@ -20,10 +20,10 @@ from pathlib import Path
 from typing import Dict, List, Optional, Tuple, Union
 from PIL import Image
 
-DEFAULT_SERVER_URL = "http://192.168.0.110:8188"
+DEFAULT_SERVER_URL = os.environ.get("COMFY_URL", "http://127.0.0.1:8188")
 SAFE_RESOLUTION_BASE = 1056
 
-# Standard model configurations on host 110
+# Standard model configurations
 UNET_MODEL = "qwen_image_2.1_int8_convrot.safetensors"
 CLIP_MODEL = "qwen3vl_8b_w4a8.safetensors"
 VAE_MODEL = "qwen_image_2.1_vae_bf16.safetensors"
@@ -50,10 +50,8 @@ def calculate_safe_grid(width: int, height: int, resolution: int = SAFE_RESOLUTI
     return safe_w, safe_h
 
 class QwenSafePipeline:
-    def __init__(self, server_url: str = DEFAULT_SERVER_URL, ssh_host: str = "192.168.0.110"):
-        self.server_url = server_url.rstrip("/")
-        self.ssh_host = ssh_host
-        self.remote_input_dir = "/home/xin/AI/ComfyUI/input"
+    def __init__(self, server_url: Optional[str] = None):
+        self.server_url = (server_url or DEFAULT_SERVER_URL).rstrip("/")
 
     def check_health(self) -> bool:
         try:
@@ -70,21 +68,25 @@ class QwenSafePipeline:
             return False
 
     def sync_image_to_remote(self, local_path: Union[str, Path], remote_filename: Optional[str] = None) -> str:
+        """
+        Upload image to ComfyUI input directory via standard HTTP REST API POST /upload/image.
+        Works across all local and remote ComfyUI installations without SSH.
+        """
         local_path = Path(local_path)
         if not local_path.exists():
             raise FileNotFoundError(f"Local file not found: {local_path}")
         remote_filename = remote_filename or local_path.name
         
-        # If server is local or loopback, simply copy
-        if "127.0.0.1" in self.server_url or "localhost" in self.server_url:
-            return remote_filename
-
-        import subprocess
-        cmd = ["scp", str(local_path), f"{self.ssh_host}:{self.remote_input_dir}/{remote_filename}"]
-        res = subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
-        if res.returncode != 0:
-            raise RuntimeError(f"Failed to scp {local_path} to {self.ssh_host}:{self.remote_input_dir}/{remote_filename}")
-        return remote_filename
+        import requests
+        url = f"{self.server_url}/upload/image"
+        with open(local_path, "rb") as f:
+            files = {"image": (remote_filename, f, "image/png")}
+            data = {"overwrite": "true"}
+            resp = requests.post(url, files=files, data=data, timeout=60)
+            if resp.status_code != 200:
+                raise RuntimeError(f"Failed to upload image to ComfyUI ({url}): HTTP {resp.status_code} - {resp.text}")
+            res = resp.json()
+            return res.get("name", remote_filename)
 
     def post_prompt(self, workflow_dict: dict) -> str:
         data = json.dumps({"prompt": workflow_dict}).encode("utf-8")

@@ -2,7 +2,7 @@
 
 > **针对 ComfyUI 官方 Issue #16435 的工业级避坑指南与高信噪比生产模板**  
 > 适配硬件：AMD Radeon RX 7900 XTX 24GB (ROCm 7.2) / NVIDIA RTX 4090 / RTX 3060 等  
-> 服务端：ComfyUI (默认 `http://192.168.0.110:8188`)
+> 服务端：ComfyUI (默认 `http://127.0.0.1:8188`，支持通过环境变量 `COMFY_URL` 自定义)
 
 ---
 
@@ -141,31 +141,32 @@ qwen_image_safe_templates/
 ## 5. 三种生产调用方式
 
 ### 方式一：ComfyUI 浏览器 Web UI 原生拖拽使用
-1. 打开浏览器访问 `http://192.168.0.110:8188`；
+1. 打开浏览器访问 ComfyUI（默认 `http://127.0.0.1:8188` 或指定远程服务器）；
 2. 点击右侧工具栏的 **Workflows -> Browse**；
 3. 直接选择 `01_safe_edit_text_web` ~ `08_safe_multiref_group_web` 中任意模板，点击加载即可；
 4. 模板中已内置彩色模块分组（蓝色模型区、粉色安全网格区、绿色提示词区、橙色输出区），直接修改 Prompt 与输入图片即可点击 **Queue** 运行。
 
 ### 方式二：Python SDK 编程与自动化批处理
-在 Python 脚本中引入 SDK，即可实现毫秒级网格对齐与全自动推理：
+在 Python 脚本中引入 SDK，即可实现毫秒级网格对齐与全自动推理（纯 HTTP 传输，跨平台无需 SSH）：
 ```python
 from qwen_safe_pipeline import QwenSafePipeline
 
-client = QwenSafePipeline(server_url="http://192.168.0.110:8188")
+# 默认直连本地或通过 COMFY_URL 环境变量指定远程服务
+client = QwenSafePipeline(server_url="http://127.0.0.1:8188")
 
 # 1. 纯文本空心红圈换装
 result = client.edit_anything_text(
-    input_image="/path/to/model_red_outline.png",
-    prompt="Replace the clothes with a luxury navy silk cheongsam.",
+    input_image="./assets/input_references/m1_base_beauty_hollow_red_2k.png",
+    prompt="Replace the clothes with a luxury navy silk cheongsam. Remove red outline. Preserve face and background.",
     output_path="./output_cheongsam.png"
 )
 print(f"Done in {result['elapsed']}s! Saved to {result['path']}")
 
 # 2. 双图物料参考换装
 result = client.edit_with_reference(
-    canvas_image="/path/to/model_red_outline.png",
-    reference_image="/path/to/couture_dress.png",
-    prompt="Completely replace clothes with reference dress.",
+    canvas_image="./assets/input_references/m1_base_beauty_hollow_red_2k.png",
+    reference_image="./assets/input_references/m2_couture_dress_ref.png",
+    prompt="Completely replace clothes with reference dress. Remove red outline. Preserve face and background.",
     output_path="./output_couture.png"
 )
 
@@ -188,7 +189,7 @@ python qwen_safe_pipeline.py calc-grid --width 1024 --height 1365
 
 # 一键执行文本局部编辑
 python qwen_safe_pipeline.py edit-text \
-  --canvas /Volumes/web_studio/test_results/aesthetic_benchmark_v2/v2_base_beauty_hollow_red.png \
+  --canvas ./assets/input_references/m1_base_beauty_hollow_red_2k.png \
   --prompt "Replace clothes with a bespoke charcoal wool blazer. Remove red outline. Preserve skin and background." \
   --output ./my_result.png
 
@@ -199,11 +200,24 @@ python qwen_safe_pipeline.py run-template \
   --seed 999999
 ```
 
+### 方式四：Antigravity Agent 技能与全自动换装流水线
+本项目已将全套安全网格算法与连袖全包封闭红圈标定引擎封装为标准的 Antigravity AI Agent 技能包与 Turn-Key CLI（位于 `skills/qwen-image-safe-studio`）：
+```bash
+# 1. 一键仅换上衣（自动连袖全包封闭标定 + 1056 安全网格计算 + 自动提交并拉取结果）
+python skills/qwen-image-safe-studio/scripts/pipeline.py edit-top \
+  --image ./assets/input_references/m1_base_beauty_2k.png \
+  --prompt "Use <image1> as the canvas for the person, pose, composition, and background, and edit only the clothing area enclosed by the red outline. Completely replace the original clothing with a sharply tailored charcoal-grey Italian wool blazer. Remove the red outline from the final result. Preserve the subject's face, neck, skin tone, hair, hands, skirt, legs, and background from <image1> exactly unchanged." \
+  --output ./edited_top_only.png
+
+# 2. 任意分辨率安全网格速算
+python skills/qwen-image-safe-studio/scripts/pipeline.py calc-grid --width 1080 --height 1920
+```
+
 ---
 
 ## 6. 硬件配置与实测性能指标
 
-在远程 110 主机（AMD Radeon RX 7900 XTX 24GB + ROCm 7.2）上的实测数据：
+在测试基准硬件（AMD Radeon RX 7900 XTX 24GB + ROCm 7.2 / NVIDIA RTX 4090）上的实测数据参考：
 
 | 测试场景 | 空 latent 尺寸 | 采样步数 | 显存峰值占用 | 单步耗时 (s/it) | 总出图耗时 | 画质与稳定性 |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
