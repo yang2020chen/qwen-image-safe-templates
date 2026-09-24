@@ -6,17 +6,14 @@ Addresses ComfyUI Issue #16435:
 - EmptyLatent dimensions must match safe_grid(w, h, 1056)
 """
 
+import argparse
 import json
-import os
 import uuid
 from pathlib import Path
 
-BASE_DIR = Path(__file__).resolve().parent
-API_DIR = BASE_DIR / "api"
-WEB_DIR = BASE_DIR / "web"
-
-API_DIR.mkdir(parents=True, exist_ok=True)
-WEB_DIR.mkdir(parents=True, exist_ok=True)
+# Keep generated files in the checked-out project by default. This avoids
+# exposing a developer's workstation path and makes the generator portable.
+PROJECT_DIR = Path(__file__).resolve().parent
 
 UNET_MODEL = "qwen_image_2.1_int8_convrot.safetensors"
 CLIP_MODEL = "qwen3vl_8b_w4a8.safetensors"
@@ -487,6 +484,22 @@ TEMPLATES = [
 ]
 
 def main():
+    parser = argparse.ArgumentParser(
+        description="Generate Qwen-Image-2.1 Safe Latent Grid templates."
+    )
+    parser.add_argument(
+        "--output-dir",
+        type=Path,
+        default=PROJECT_DIR,
+        help="Directory that receives api/ and web/ (default: this project).",
+    )
+    args = parser.parse_args()
+    base_dir = args.output_dir.resolve()
+    api_dir = base_dir / "api"
+    web_dir = base_dir / "web"
+    api_dir.mkdir(parents=True, exist_ok=True)
+    web_dir.mkdir(parents=True, exist_ok=True)
+
     print("[*] Generating Qwen-Image-2.1 Safe Latent Grid Templates...")
     
     for tpl in TEMPLATES:
@@ -512,7 +525,7 @@ def main():
                 prefix=tpl["prefix"]
             )
             
-        api_path = API_DIR / f"{name}.json"
+        api_path = api_dir / f"{name}.json"
         with open(api_path, "w", encoding="utf-8") as f:
             json.dump(api_data, f, indent=2, ensure_ascii=False)
         print(f" [✓] Created API template: {api_path.name}")
@@ -528,14 +541,14 @@ def main():
             steps=tpl["steps"],
             prefix=tpl["prefix"]
         )
-        web_path = WEB_DIR / f"{name}_web.json"
+        web_path = web_dir / f"{name}_web.json"
         with open(web_path, "w", encoding="utf-8") as f:
             json.dump(web_data, f, indent=2, ensure_ascii=False)
         print(f" [✓] Created Web UI template: {web_path.name}")
 
     print(f"\n[✓] All {len(TEMPLATES)} templates successfully created in:")
-    print(f"    - API: {API_DIR}")
-    print(f"    - Web UI: {WEB_DIR}")
+    print(f"    - API: {api_dir}")
+    print(f"    - Web UI: {web_dir}")
 
 if __name__ == "__main__":
     main()
