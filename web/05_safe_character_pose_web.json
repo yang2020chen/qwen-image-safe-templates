@@ -1,5 +1,5 @@
 {
-  "id": "dd27e03e-f2ad-4a4a-a6cd-4af2fa340e65",
+  "id": "49bd5b6a-7244-4249-8949-18802affee0f",
   "revision": 0,
   "last_node_id": 4901,
   "last_link_id": 11,
@@ -167,7 +167,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "v2_character_sheet_3view.png",
+        "m4_character_sheet_ref.png",
         "image"
       ]
     },

@@ -389,7 +389,7 @@ TEMPLATES = [
         "height": 1216,
         "res": 1056,
         "steps": 32,
-        "images": ["v2_base_beauty_hollow_red.png"],
+        "images": ["m1_base_beauty_hollow_red_2k.png"],
         "prompt": "Use <image1> as the canvas for the person, pose, composition, and background, and edit only the clothing area enclosed by the red outline. Replace the casual sweater with a tailored charcoal-grey Italian wool blazer, fitted white silk shirt underneath, delicate fabric texture, and realistic textile folds. Remove the red outline from the final result. Preserve the subject's face, skin, hair, and clean modern studio background from <image1> exactly unchanged.",
         "prefix": "safe_edit_text"
     },
@@ -402,7 +402,7 @@ TEMPLATES = [
         "height": 1216,
         "res": 1056,
         "steps": 35,
-        "images": ["v2_base_beauty_hollow_red.png", "v2_couture_dress_ref.png"],
+        "images": ["m1_base_beauty_hollow_red_2k.png", "m2_couture_dress_ref.png"],
         "prompt": "Use <image1> as the canvas for the person, pose, composition, and background, and edit only the clothing area enclosed by the red outline. Use <image2> as the reference for the garment design, colors, delicate embroidery patterns, and fabric materials, completely replacing the original clothing with the luxury haute couture tweed dress from <image2>. Accurately adapt the dress to the standing pose, including natural folds and realistic shadows. Completely remove the red outline. Preserve the model's identity, facial features, crystal-clear cold white skin tone, hairstyle, and modern studio background from <image1> exactly unchanged.",
         "prefix": "safe_edit_ref"
     },
@@ -441,7 +441,7 @@ TEMPLATES = [
         "height": 1216,
         "res": 1056,
         "steps": 35,
-        "images": ["v2_character_sheet_3view.png"],
+        "images": ["m4_character_sheet_ref.png"],
         "prompt": "Use <image1> as the character identity and clothing reference. Generate a full-body dynamic cinematic wide shot of the same character slowly walking along a wooden pavilion terrace by a lotus pond at twilight. She gently turns her head back towards the camera with an enigmatic gaze. Maintain 100% facial features, hairstyle, hair accessories, and the exact intricate hanfu embroidery patterns from <image1>. Atmospheric lanterns cast warm amber reflections across ripples in the water, cinematic lighting, masterpiece.",
         "prefix": "safe_char_pose"
     },
@@ -454,7 +454,7 @@ TEMPLATES = [
         "height": 1216,
         "res": 1056,
         "steps": 32,
-        "images": ["v2_base_beauty_hollow_red.png", "v2_commercial_perfume_ref.png"],
+        "images": ["m1_base_beauty_2k.png", "m3_perfume_bottle_ref.png"],
         "prompt": "Use <image1> as the canvas for the model, pose, and background. Seamlessly composite the luxury perfume bottle from <image2> into her right hand. The fingers gracefully wrap around the faceted crystal flacon with anatomical precision. Realistic amber liquid refraction, specular highlights, and golden caustic patterns project onto her hand and dress. Studio rim lighting, luxury advertising photography, 8k resolution, crisp commercial grade quality.",
         "prefix": "safe_commercial_ad"
     },
@@ -480,7 +480,7 @@ TEMPLATES = [
         "height": 928,
         "res": 1056,
         "steps": 35,
-        "images": [f"m5_avatar_{i}.png" for i in range(1, 11)],
+        "images": [f"m5_avatar_{i:02d}.png" for i in range(1, 11)],
         "prompt": "A panoramic cinematic group portrait of 10 distinct women standing together on a sunlit Santorini terrace overlooking the Aegean Sea. Each woman's facial identity, ethnicity, skin tone, eye shape, and hairstyle corresponds faithfully and uniquely to <image1> through <image10> respectively. Perfect natural smiles, individual postures, golden hour Mediterranean sun casting soft shadows, crisp sharp focus across all faces, zero face blending or mutation.",
         "prefix": "safe_multiref_group"
     }

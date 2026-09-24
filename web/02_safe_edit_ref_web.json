@@ -1,5 +1,5 @@
 {
-  "id": "cdc0b2d8-d70b-42f6-bea3-da613aeb1190",
+  "id": "4555fbd6-fbdc-487c-9148-6fe5ffa18ed3",
   "revision": 0,
   "last_node_id": 4902,
   "last_link_id": 12,
@@ -167,7 +167,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "v2_base_beauty_hollow_red.png",
+        "m1_base_beauty_hollow_red_2k.png",
         "image"
       ]
     },
@@ -204,7 +204,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "v2_couture_dress_ref.png",
+        "m2_couture_dress_ref.png",
         "image"
       ]
     },

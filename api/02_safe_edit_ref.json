@@ -105,13 +105,13 @@
   "4801": {
     "class_type": "LoadImage",
     "inputs": {
-      "image": "v2_base_beauty_hollow_red.png"
+      "image": "m1_base_beauty_hollow_red_2k.png"
     }
   },
   "4802": {
     "class_type": "LoadImage",
     "inputs": {
-      "image": "v2_couture_dress_ref.png"
+      "image": "m2_couture_dress_ref.png"
     }
   }
 }

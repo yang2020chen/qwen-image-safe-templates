@@ -1,5 +1,5 @@
 {
-  "id": "3e7db07a-98ca-4fd3-bec5-cd7b0d58fe1c",
+  "id": "4b1ffc0c-36e4-42d3-bde9-cad62afd6d7b",
   "revision": 0,
   "last_node_id": 4901,
   "last_link_id": 11,
@@ -167,7 +167,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "v2_base_beauty_hollow_red.png",
+        "m1_base_beauty_hollow_red_2k.png",
         "image"
       ]
     },

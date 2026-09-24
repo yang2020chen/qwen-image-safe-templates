@@ -101,7 +101,7 @@
   "4801": {
     "class_type": "LoadImage",
     "inputs": {
-      "image": "v2_character_sheet_3view.png"
+      "image": "m4_character_sheet_ref.png"
     }
   }
 }

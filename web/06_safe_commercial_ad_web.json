@@ -1,5 +1,5 @@
 {
-  "id": "1456c062-4d4e-467a-9d88-008df5a48670",
+  "id": "53b61035-a5ab-4ffa-87bc-119ca66263e2",
   "revision": 0,
   "last_node_id": 4902,
   "last_link_id": 12,
@@ -167,7 +167,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "v2_base_beauty_hollow_red.png",
+        "m1_base_beauty_2k.png",
         "image"
       ]
     },
@@ -204,7 +204,7 @@
         "Node name for S&R": "LoadImage"
       },
       "widgets_values": [
-        "v2_commercial_perfume_ref.png",
+        "m3_perfume_bottle_ref.png",
         "image"
       ]
     },

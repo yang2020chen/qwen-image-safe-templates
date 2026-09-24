@@ -105,13 +105,13 @@
   "4801": {
     "class_type": "LoadImage",
     "inputs": {
-      "image": "v2_base_beauty_hollow_red.png"
+      "image": "m1_base_beauty_2k.png"
     }
   },
   "4802": {
     "class_type": "LoadImage",
     "inputs": {
-      "image": "v2_commercial_perfume_ref.png"
+      "image": "m3_perfume_bottle_ref.png"
     }
   }
 }
